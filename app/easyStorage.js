@@ -18,21 +18,45 @@ function AlwaysLocalEasyStorageFactory($q) {
     easyStorage.prototype.get = get;
     return easyStorage;
 
+    /**
+     * @description
+     * The Constructor of the EasyStroage
+     * @param name
+     * @constructor
+     */
     function EasyStorage(name) {
         var self = this;
         self.name = name;
     }
 
+    /**
+     * @description
+     * Returns the type of the current app.
+     * Either "chromeApp" or "localStorage" will be returned, based on the current app type
+     * @returns {*}
+     */
     function getCurrentAppType() {
-        return 'chromeApp';
-        //return 'localStorage';
+        if (chrome && chrome.storage && chrome.storage.local) {
+            return 'chromeApp';
+        }
+        return 'localStorage';
     }
 
+    /**
+     * @description
+     * Either gets data from the localStorage or the chrome-app-storage
+     * @returns {*}
+     */
     function get() {
         return storageTypes[currentAppType].get.apply(this, arguments);
     }
 
-    function set(key, data) {
+    /**
+     * @description
+     * Either sets data to the localStorage or the chrome-app-storage
+     * @returns {*}
+     */
+    function set() {
         return storageTypes[currentAppType].set.apply(this, arguments);
     }
 
@@ -109,6 +133,12 @@ function AlwaysLocalEasyStorageFactory($q) {
 
      */
 
+    /**
+     * @description
+     * Gets data from the Chrome-apps storage
+     * @param {string=} key
+     * @returns {*}
+     */
     function getByChromeApp(key) {
         var defer = $q.defer();
         var self = this;
@@ -130,23 +160,28 @@ function AlwaysLocalEasyStorageFactory($q) {
         return defer.promise;
     }
 
+    /**
+     * @description
+     * Writes data to the storage of the chrome app
+     * @param {string|*} key
+     * @param {*=} value
+     * @returns {*}
+     */
     function setByChromeApp(key, value) {
         var defer = $q.defer();
         var self = this;
-
-        getByChromeApp.call(self).then(function (data) {//@todo: das könnte hier anderes überschreiben
+        chrome.storage.local.get(self.name, function (response) {
+            var data = response[self.name];
             if (value) {
                 data[key] = value;
             } else {
                 data = key;
             }
-            var dataWithName = {};
-            dataWithName[self.name] = data;
-            chrome.storage.local.set(dataWithName, function () {
+            response[self.name] = data;
+            chrome.storage.local.set(response, function () {
                 defer.resolve(data, JSON.stringify(data));
             });
-        }, defer.reject);
-
+        });
         return defer.promise;
     }
 

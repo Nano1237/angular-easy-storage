@@ -26,8 +26,8 @@ angular.module('test', ['easyStorage']).run(function (EasyStorage) {
     });
     //
     //
-    testB.set({a: 1}).then(function () {
-        testA.set('a', 66).then(function (data) {
+    testB.set({b: 0}).then(function () {
+        testB.set('b', 99).then(function (data) {
             console.log(data, 'b');
         }, function (error) {
             console.warn(error);
