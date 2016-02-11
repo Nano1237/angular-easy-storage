@@ -1,0 +1,7 @@
+{
+  "name": "angular-always-local",
+  "description": "Helps to easy use the localStorage or alternatives",
+  "devDependencies": {
+    "angular": "1.5.0"
+  }
+}
