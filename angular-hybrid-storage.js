@@ -1,7 +1,6 @@
-angular.module('easyStorage', []).factory('EasyStorage', AlwaysLocalEasyStorageFactory);
+angular.module('angular-hybrid-storage', []).factory('HybridStorage', AngularHybridStorageHybridStorage);
 
-
-function AlwaysLocalEasyStorageFactory($q) {
+function AngularHybridStorageHybridStorage($q) {
     var easyStorage = EasyStorage;
     var currentAppType = getCurrentAppType();
     var storageTypes = {
@@ -36,7 +35,9 @@ function AlwaysLocalEasyStorageFactory($q) {
      * @returns {*}
      */
     function getCurrentAppType() {
-        if (chrome && chrome.storage && chrome.storage.local) {
+        var defined = angular.isDefined;
+				var chrome = window.chrome;
+        if (defined(chrome) && defined(chrome.storage) && defined(chrome.storage.local)) {
             return 'chromeApp';
         }
         return 'localStorage';

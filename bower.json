@@ -1,7 +1,15 @@
 {
-  "name": "angular-always-local",
+  "name": "angular-hybrid-storage",
   "description": "Helps to easy use the localStorage or alternatives",
   "devDependencies": {
     "angular": "1.5.0"
-  }
+  },
+  "ignore": [
+    "test.html",
+    ".gitignore",
+    "chrome-app.js",
+    "manifest.json",
+    "package.json",
+    "test.js"
+  ]
 }

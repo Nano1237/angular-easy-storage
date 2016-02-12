@@ -1,5 +1,5 @@
-angular.module('test', ['easyStorage']).run(function (EasyStorage) {
-    var testA = new EasyStorage('TEST_NAME');
+angular.module('test', ['angular-hybrid-storage']).run(function (HybridStorage) {
+    var testA = new HybridStorage('TEST_NAME');
     testA.get().then(function (data) {
         console.log(data, 'a');
     }, function (error) {
@@ -18,7 +18,7 @@ angular.module('test', ['easyStorage']).run(function (EasyStorage) {
     });
 
 
-    var testB = new EasyStorage('TEST_NAME_B');
+    var testB = new HybridStorage('TEST_NAME_B');
     testB.get().then(function (data) {
         console.log(data, 'b');
     }, function (error) {
