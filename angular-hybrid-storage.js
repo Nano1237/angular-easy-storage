@@ -37,8 +37,12 @@ function AngularHybridStorageHybridStorage($q) {
     function getCurrentAppType() {
         var defined = angular.isDefined;
 				var chrome = window.chrome;
-        if (defined(chrome) && defined(chrome.storage) && defined(chrome.storage.local)) {
-            return 'chromeApp';
+        if (defined(chrome)) {
+					if(defined(chrome.storage) && defined(chrome.storage.local)){
+						return 'chromeApp';
+					}	else{
+						console.warn('"chrome.storage.local" is not used. Maybe not enough rights?');
+					}
         }
         return 'localStorage';
     }
