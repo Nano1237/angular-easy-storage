@@ -114,6 +114,9 @@ function AngularHybridStorageHybridStorage($q) {
         getByLocalStorage.call(self).then(function (data) {
             var dataString;
             if (value) {
+                if(data === null || !angular.isObject(data)){
+                    data={};
+                }
                 data[key] = value;
             } else {
                 data = key;
